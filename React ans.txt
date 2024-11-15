@@ -1,9 +1,11 @@
-For most questions use these commands in terminal
 cd reactapp
+nvm use 14
 npm install
+npm install react-router-dom
 npm install canvas
-and run test case
-
+npm install @mui/material @emotion/react @emotion/styled
+npm install styled-components
+npm start
 
 
 1.  Greeting Message
