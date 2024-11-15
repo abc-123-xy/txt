@@ -1,0 +1,71 @@
+
+11.Theme App using Redux
+
+// App.js
+import React from 'react';
+import { Provider } from 'react-redux';
+import Theme from './components/Theme';
+import { Store } from './redux/Store';
+
+const App = () => {
+  return (
+    <Provider store={Store}>
+      <Theme />
+    </Provider>
+  );
+};
+
+export default App;
+
+
+// Store.js
+import { configureStore } from '@reduxjs/toolkit';
+import themeReducer from './themeSlice';
+
+export const Store = configureStore({
+  reducer: {
+    theme: themeReducer,
+  },
+});
+
+
+
+
+// themeSlice.js
+import { createSlice } from '@reduxjs/toolkit';
+
+const themeSlice = createSlice({
+  name: 'theme',
+  initialState: { isDark: true },
+  reducers: {
+    toggleTheme: (state) => {
+      state.isDark = !state.isDark;
+    },
+  },
+});
+
+export const { toggleTheme } = themeSlice.actions;
+export default themeSlice.reducer;
+
+
+// Theme.js
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from '../redux/themeSlice';
+
+const Theme = () => {
+  const dispatch = useDispatch();
+  const isDark = useSelector((state) => state.theme.isDark);
+
+  return (
+    <div
+      data-testid="theme-container"
+      style={{ backgroundColor: isDark ? 'black' : 'white', color: isDark ? 'white' : 'black' }}
+    >
+      <button onClick={() => dispatch(toggleTheme())}>Theme</button>
+    </div>
+  );
+};
+
+export default Theme;
+

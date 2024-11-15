@@ -1,0 +1,18 @@
+3. Display data using Props
+// App.js
+import React from 'react';
+
+const App = () => {
+  const dynamicData = new Date().toString();
+
+  return (
+    <div>
+      <p>Static Data:</p>
+      <span>Hello, I am static data!</span>
+      <p>Dynamic Data:</p>
+      <span>{dynamicData}</span>
+    </div>
+  );
+};
+
+export default App;

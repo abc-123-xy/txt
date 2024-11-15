@@ -1,0 +1,78 @@
+
+
+
+
+
+
+
+
+
+
+10.Counter using Redux
+
+
+//App.js
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Store } from './redux/Store';
+import Counter from './components/Counter';
+
+const App = () => (
+    <Provider store={Store}>
+        <Counter />
+    </Provider>
+);
+
+export default App;
+
+
+//components/Counter.jsx
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { increment, decrement } from '../redux/CounterAction';
+
+const Counter = () => {
+    const count = useSelector((state) => state.count);
+    const dispatch = useDispatch();
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={() => dispatch(increment())}>Increment</button>
+            <button onClick={() => dispatch(decrement())}>Decrement</button>
+        </div>
+    );
+};
+
+export default Counter;
+
+
+//redux/Store.js
+import { createStore } from 'redux';
+import counterReducer from './CounterReducer';
+
+export const Store = createStore(counterReducer);
+
+
+
+//reduxCounterReducer.js
+const initialState = { count: 0 };
+
+const counterReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'INCREMENT':
+            return { count: state.count + 1 };
+        case 'DECREMENT':
+            return { count: state.count - 1 };
+        default:
+            return state;
+    }
+};
+
+export default counterReducer;
+
+
+//redux/CounterAction.js
+export const increment = () => ({ type: 'INCREMENT' });
+export const decrement = () => ({ type: 'DECREMENT' });
+
