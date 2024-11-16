@@ -1,0 +1,264 @@
+A love story of Gate by Norvi Jameshan 
+
+// Greeting.js
+import React from 'react';
+
+const Greeting = () => {
+  const userName = 'John';
+  const formattedDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  return (
+    <div>
+      <h1>Hello, {userName}!</h1>
+      <p>Welcome to our website. Today is {formattedDate}.</p>
+    </div>
+  );
+};
+
+export default Greeting;
+
+//App.js
+import React from 'react';
+import './assets/css/App.css';
+import Greeting from './components/Greeting';
+
+function App() {
+  return (
+    <div className="App">
+      <Greeting/>
+    </div>
+  );
+}
+
+export default App;
+-----------------------------------------------------------------------------------------------------------------
+2)import React, { useState } from 'react';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+-----------------------------------------------------------------------------------------------------------------
+3)import React from 'react';
+
+const App = () => {
+  const dynamicData = new Date().toString();
+
+  return (
+    <div>
+      <p>Static Data:</p>
+      <span>Hello, I am static data!</span>
+      <p>Dynamic Data:</p>
+      <span>{dynamicData}</span>
+    </div>
+  );
+};
+----------------------------------------------------------------------------------------------------------------
+4)import React, { useState } from 'react';
+import TodoItem from './TodoItem';
+
+const TodoList = () => {
+
+  return (
+    <div>
+      <h1>todo list</h1>
+      <input placeholder="add a new todo"/>
+      <button>add</button>
+      <TodoItem/>
+     
+
+    </div>
+    
+  );
+};
+
+export default TodoList;
+------------------------------------------------------------------------------------------------------------------
+5)export default function CustomCard(){
+    return (
+        <>
+        <p>Nature</p>
+        <p>In the embrace of nature, the symphony of chirping birds and the gentle caress of a breeze paint a serene canvas of tranquility.</p>
+        <p>Share</p>
+        <p>Learn More</p>
+        </>
+    );
+}
+---------------------------------------------------------------------------------------------------------------
+6)import React, { Component } 
+from 'react';
+import PropTypes from 'prop-types';
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+        hasError: false 
+    };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    console.error('ErrorBoundary caught an error:', error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2>Something went wrong</h2>;
+    }
+    return this.props.children;
+  }
+}
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default ErrorBoundary;
+
+      -------------------
+export default function Hero({heroName}){
+
+    if (heroName === 'Joker') {
+        throw new Error('Not a hero');
+    }
+    
+    return <p>{heroName}</p>;
+   
+    
+}
+--------------------
+import React from 'react';
+import Hero from './components/Hero';
+import ErrorBoundary from './components/ErrorBoundary';
+
+const App = () => {
+  return (
+    <div className="App">
+      <ErrorBoundary>
+        <Hero heroName="Batman" />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <Hero heroName="Joker" />
+      </ErrorBoundary>
+    </div>
+  );
+};
+
+export default App;
+
+-----------------------------------------------------------------------------------------------------------------
+
+7)
+
+import { useRef } from "react";
+
+export default function Form() {
+    const emailRef = useRef(null);
+    const passRef = useRef(null);
+
+    function handleSubmit(e) {
+        e.preventDefault(); // Prevents the default form submission behavior
+        console.log(emailRef.current.value);
+        console.log(passRef.current.value);
+
+        // Clear input fields after submission
+        emailRef.current.value = '';
+        passRef.current.value = '';
+
+        // Set focus back to the email field
+        emailRef.current.focus();
+    }
+
+    return (
+        <>
+            <form onSubmit={handleSubmit}>
+                <input id="email" ref={emailRef} placeholder="Email" />
+                <input id="password" ref={passRef} type="password" placeholder="Password" />
+                <button type="submit">Submit</button>
+            </form>
+        </>
+    );
+}
+----------------------------------------------------------------------------------------------------------------
+8)
+
+import React, { useState, useEffect } from 'react';
+
+const WithLoading = (WrappedComponent) => {
+  return (props) => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }, []);
+
+    return isLoading ? <div>Loading...</div> : <WrappedComponent {...props} />;
+  };
+};
+
+export default WithLoading;
+
+
+----------
+import React from 'react';
+import WithLoading from './components/WithLoading';
+
+
+const MockComponent = () => <div>Hello, I'm the wrapped component!</div>;
+
+const WrappedComponentWithLoading = WithLoading(MockComponent);
+
+function App() {
+  return (
+    <div>
+      <h1>App with Higher-Order Component</h1>
+      <WrappedComponentWithLoading />
+    </div>
+  );
+}
+
+export default App;
+-----------------------------------------------------------------------------------------------------------------
+9)
+import { useState } from "react";
+
+export default function UserList(){
+
+    const [user,setUser] = useState([]);
+    return(
+        <>
+        <h1>User List</h1>
+        <ul>
+            {user.map((item)=>{
+                <li>{item}</li>
+            })}
+        </ul>
+        </>
+    );
+
+
+}
+----------------------------------------------------------------------------------------------------------------
